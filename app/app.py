@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from starlette.responses import UJSONResponse
 
 from app.schema import User, Metrics
 
@@ -11,7 +12,7 @@ def home():
     return {"message": "Hello world"}
 
 
-@app.post("/age/", response_model=User)
+@app.post("/age/", response_model=User, response_class=UJSONResponse)
 def age_user(user: User):
     user.age += 1
     return user
