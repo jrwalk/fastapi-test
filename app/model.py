@@ -10,7 +10,7 @@ class ModelWrapper:
         with open(model_path, "rb") as rf:
             self.model = pickle.load(rf)
 
-    def predict(self, X: dict) -> dict:
+    def predict(self, X: dict) -> List[int]:
         X = pandas.DataFrame(X)
         return self.model.predict(X).tolist()
 
