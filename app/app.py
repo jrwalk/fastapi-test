@@ -5,7 +5,11 @@ from app.schema import Input, Output, ScoreInput, ScoreOutput, ValidScores
 from app.model import ModelWrapper
 
 
-app = FastAPI()
+app = FastAPI(
+    title="fastapi-test",
+    description="a quick skateboard for serving `sklearn` models with FastAPI",
+    version="0.1"
+)
 model = ModelWrapper("/opt/fastapi-test/models/model.pkl")
 
 
