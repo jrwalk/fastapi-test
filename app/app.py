@@ -23,14 +23,14 @@ async def home():
 
 
 @app.post("/model/predict", response_model=Output, response_class=UJSONResponse)
-def predict(input: Input):
+async def predict(input: Input):
     return {"class_label": model.predict(input.dict())}
 
 
 @app.post(
     "/model/score/{method}", response_model=ScoreOutput, response_class=UJSONResponse
 )
-def score(method: ValidScores, input: ScoreInput):
+async def score(method: ValidScores, input: ScoreInput):
     data = input.data.dict()
     label = input.label
     method = method.value
