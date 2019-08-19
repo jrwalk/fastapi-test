@@ -1,8 +1,9 @@
+from typing import List
+
 import cloudpickle as pickle
 import numpy as np
 import pandas
 import sklearn.metrics as metrics
-from typing import List
 
 
 class ModelWrapper:

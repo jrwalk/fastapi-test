@@ -1,6 +1,7 @@
-from pydantic import BaseModel
-from enum import Enum
 from typing import List
+from enum import Enum
+
+from pydantic import BaseModel
 
 
 class Input(BaseModel):
