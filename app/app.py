@@ -9,7 +9,7 @@ app = FastAPI()
 model = ModelWrapper("/opt/fastapi-test/models/model.pkl")
 
 @app.get("/")
-def home():
+async def home():
     reply = ("this sentence is already halfway over,"
             " and still hasn't said anything at all")
     return {"message": reply}
