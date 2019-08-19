@@ -1,23 +1,32 @@
 from fastapi import FastAPI
 from starlette.responses import UJSONResponse
 
-from app.schema import User, Metrics
+from app.schema import Input, Output, ScoreInput, ScoreOutput, ValidScores
+from app.model import ModelWrapper
 
 
 app = FastAPI()
-
+model = ModelWrapper("/opt/fastapi-test/models/model.pkl")
 
 @app.get("/")
 def home():
-    return {"message": "Hello world"}
+    reply = ("this sentence is already halfway over,"
+            " and still hasn't said anything at all")
+    return {"message": reply}
 
 
-@app.post("/age/", response_model=User, response_class=UJSONResponse)
-def age_user(user: User):
-    user.age += 1
-    return user
+@app.post('/model/predict', response_model=Output, response_class=UJSONResponse)
+def predict(input: Input):
+    return {
+        "class_label": model.predict(input.dict())
+    }
 
-
-@app.post("/similarity/{metric}")
-def similarity(metric: Metrics):
-    return {"selected_metric": metric}
+@app.post("/model/score/{method}", response_model=ScoreOutput, response_class=UJSONResponse)
+def score(method: ValidScores, input: ScoreInput):
+    data = input.data.dict()
+    label = input.label
+    method = method.value
+    return {
+        "score": model.score(data, label, method),
+        "method": method
+    }

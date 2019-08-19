@@ -1,7 +1,10 @@
+build:
+	docker-compose build fastapi-test
+
 lint:
 	docker-compose run --rm fastapi-test /bin/bash -c "flake8 app/ && mypy app/ && black app/"
 
-test:
+tests:
 	docker-compose run --rm fastapi-test python -m pytest test/
 
 dev-shell:
