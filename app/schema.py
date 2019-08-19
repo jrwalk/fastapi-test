@@ -4,23 +4,23 @@ from enum import Enum
 from pydantic import BaseModel
 
 
+class Record(BaseModel):
+    sepal_length: float
+    sepal_width: float
+    petal_length: float
+    petal_width: float
+
+
 class Input(BaseModel):
-    sepal_length: List[float]
-    sepal_width: List[float]
-    petal_length: List[float]
-    petal_width: List[float]
+    data: List[Record]
+    label: List[int] = None
 
 
-class Output(BaseModel):
+class Prediction(BaseModel):
     class_label: List[int]
 
 
-class ScoreInput(BaseModel):
-    data: Input
-    label: List[int]
-
-
-class ScoreOutput(BaseModel):
+class Score(BaseModel):
     score: float
     method: str
 
