@@ -11,9 +11,17 @@ class Record(BaseModel):
     petal_width: float
 
 
+class LabeledRecord(BaseModel):
+    record: Record
+    label: int
+
+
 class Input(BaseModel):
     data: List[Record]
-    label: List[int] = None
+
+
+class LabeledInput(BaseModel):
+    data: List[LabeledRecord]
 
 
 class Prediction(BaseModel):

@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from starlette.responses import UJSONResponse
 
-from app.schema import Input, Prediction, Score, ValidScores
+from app.schema import Input, LabeledInput, Prediction, Score, ValidScores
 from app.model import ModelWrapper
 
 
@@ -30,10 +30,9 @@ async def predict(input: Input):
 @app.post(
     "/model/score/{method}", response_model=Score, response_class=UJSONResponse
 )
-async def score(method: ValidScores, input: Input):
-    input = input.dict()
-    data = input['data']
-    label = input['label']
-    # TODO add validation for non-null label
+async def score(method: ValidScores, input: LabeledInput):
+    input = input.dict()['data']
+    data = [r['record'] for r in input]
+    label = [r['label'] for r in input]
     method = method.value
     return {"score": model.score(data, label, method), "method": method}
